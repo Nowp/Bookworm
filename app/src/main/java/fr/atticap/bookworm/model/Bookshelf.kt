@@ -7,7 +7,7 @@ import kotlin.uuid.Uuid
 
 @Entity(tableName = "bookshelf")
 data class Bookshelf @OptIn(ExperimentalUuidApi::class) constructor(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Uuid,
     val name: String,
 )

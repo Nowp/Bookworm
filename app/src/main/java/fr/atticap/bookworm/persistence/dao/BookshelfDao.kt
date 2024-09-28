@@ -1,3 +1,5 @@
+package fr.atticap.bookworm.persistence.dao
+
 import androidx.room.Dao
 import androidx.room.Query
 import fr.atticap.bookworm.model.Book
@@ -6,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookshelfDao {
-    @Query("SELECT * FROM bookshelf NATURAL JOIN bookshelf_content NATURAL JOIN book")
+    @Query("SELECT bookshelf.*, book.* FROM bookshelf NATURAL JOIN bookshelf_content NATURAL JOIN book")
     fun getBookshelvesWithBooks(): Flow<Map<Bookshelf, Book>>
 
     @Query("SELECT * FROM bookshelf")
