@@ -8,6 +8,6 @@ import kotlin.uuid.Uuid
 @Entity(tableName = "bookshelf")
 data class Bookshelf @OptIn(ExperimentalUuidApi::class) constructor(
     @PrimaryKey
-    val id: Uuid,
+    val id: Uuid = Uuid.random(),
     val name: String,
 )

@@ -7,10 +7,10 @@ import fr.atticap.bookworm.model.Book
 import fr.atticap.bookworm.model.Bookshelf
 import fr.atticap.bookworm.model.BookshelfContent
 import fr.atticap.bookworm.persistence.converters.UuidConverter
-import fr.atticap.bookworm.persistence.dao.BookshelfDao
+import fr.atticap.bookworm.persistence.dao.BookDao
 
 @Database(version = 1, entities = [Bookshelf::class, Book::class, BookshelfContent::class], exportSchema = true)
 @TypeConverters(UuidConverter::class)
 abstract class BookwormDatabase: RoomDatabase() {
-    abstract fun bookshelfDao(): BookshelfDao
+    abstract fun bookshelfDao(): BookDao
 }

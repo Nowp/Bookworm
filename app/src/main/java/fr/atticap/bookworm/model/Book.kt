@@ -8,7 +8,7 @@ import kotlin.uuid.Uuid
 @Entity(tableName = "book")
 data class Book @OptIn(ExperimentalUuidApi::class) constructor(
     @PrimaryKey
-    val id: Uuid,
+    val id: Uuid = Uuid.random(),
     val title: String,
     val author: String,
     val year: Int
