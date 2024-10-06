@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "69d6fcd32c78ccfba249cda5b337b8e9",
+    "identityHash": "b370a49b4464a9b0c9f62c9eaf4a68c8",
     "entities": [
       {
         "tableName": "bookshelf",
@@ -31,7 +31,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "book",
+        "tableName": "volume",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `title` TEXT NOT NULL, `author` TEXT NOT NULL, `year` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -99,7 +99,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '69d6fcd32c78ccfba249cda5b337b8e9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b370a49b4464a9b0c9f62c9eaf4a68c8')"
     ]
   }
 }

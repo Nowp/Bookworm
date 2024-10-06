@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-@Entity(tableName = "book")
-data class Book @OptIn(ExperimentalUuidApi::class) constructor(
+@Entity(tableName = "volume")
+data class Volume @OptIn(ExperimentalUuidApi::class) constructor(
     @PrimaryKey
     val id: Uuid = Uuid.random(),
     val title: String,
