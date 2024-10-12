@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,15 +43,15 @@ fun VolumeScreen() {
     volume.onSome {
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             MainInfo(title = it.title, author = it.author, year = it.year)
-            Description(description = MOCK_DESCRIPTION)
             Tags()
+            Description(description = MOCK_DESCRIPTION)
         }
     }
 }
 
 @Composable
 private fun MainInfo(title: String, author: String, year: Int) {
-    Text(text = title, style = MaterialTheme.typography.displayMedium)
+    Text(text = title, style = MaterialTheme.typography.displaySmall)
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -65,16 +68,24 @@ private fun MainInfo(title: String, author: String, year: Int) {
 
 @Composable
 private fun Description(modifier: Modifier = Modifier, description: String) {
-    Card(modifier.padding(all = 4.dp)) {
-        Text(text = "Description", style = MaterialTheme.typography.headlineMedium)
-        Text(text = description, style = MaterialTheme.typography.bodyMedium)
+    Card(modifier) {
+        Column(
+            modifier = Modifier.padding(10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(text = "Description", style = MaterialTheme.typography.headlineMedium)
+            Text(text = description, style = MaterialTheme.typography.bodyMedium)
+        }
     }
-
 }
 
 @Composable
 private fun Tags(modifier: Modifier = Modifier) {
-    Row {
-        InputChip(selected = true, onClick = {}, label = { Text(text = "Chip") })
+    Row(modifier) {
+        InputChip(
+            selected = true,
+            onClick = {},
+            label = { Text(text = "Chip") },
+            trailingIcon = { Icon(imageVector = Icons.Filled.Clear, contentDescription = null) }
+        )
     }
 }
