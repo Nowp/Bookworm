@@ -5,12 +5,14 @@ kotlin-serialization = "1.7.3"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junit-version = "1.2.1"
+materialKolor = "2.0.0"
 espressoCore = "3.6.1"
+kotlinx-datetime = "0.6.1"
 lifecycle-runtime-ktx = "2.8.6"
 activity-compose = "1.9.2"
 composeBom = "2024.09.03"
 navigation_compose = "2.8.2"
-room_version = "2.6.1"
+room_version = "2.7.0-alpha09"
 ksp = "2.0.20-1.0.24"
 koin-bom = "4.0.0"
 arrow = "1.2.4"
@@ -45,7 +47,9 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation_compose" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-serialization" }
+materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 
 [plugins]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

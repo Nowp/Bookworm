@@ -11,5 +11,5 @@ data class Volume @OptIn(ExperimentalUuidApi::class) constructor(
     val id: Uuid = Uuid.random(),
     val title: String,
     val author: String,
-    val year: Int
+    val year: Int,
 )

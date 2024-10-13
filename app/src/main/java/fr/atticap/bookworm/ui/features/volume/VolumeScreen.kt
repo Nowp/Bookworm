@@ -5,11 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.InputChip
+import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -22,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import arrow.core.None
 import arrow.core.Option
 import arrow.core.toOption
+import fr.atticap.bookworm.model.PositionedTag
+import fr.atticap.bookworm.model.Tag
 import fr.atticap.bookworm.model.Volume
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.Serializable
@@ -38,12 +45,15 @@ private const val MOCK_DESCRIPTION =
 fun VolumeScreen() {
     val detailsViewModel = koinViewModel<VolumeViewModel>()
 
-    val volume: Option<Volume> by detailsViewModel.volume.map { it.toOption() }.collectAsState(None)
+    val volume: Option<Pair<Volume, List<PositionedTag>>> by detailsViewModel.volume.map { it.toOption() }
+        .collectAsState(None)
 
-    volume.onSome {
+    volume.onSome { (volume, tags) ->
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            MainInfo(title = it.title, author = it.author, year = it.year)
-            Tags()
+            MainInfo(title = volume.title, author = volume.author, year = volume.year)
+            Tags(tags = tags.sortedBy(PositionedTag::pos).map(PositionedTag::tag), onAddTag = {
+                detailsViewModel.addTagToVolume()
+            })
             Description(description = MOCK_DESCRIPTION)
         }
     }
@@ -79,13 +89,29 @@ private fun Description(modifier: Modifier = Modifier, description: String) {
 }
 
 @Composable
-private fun Tags(modifier: Modifier = Modifier) {
+private fun Tags(modifier: Modifier = Modifier, tags: List<Tag>, onAddTag: () -> Unit) {
     Row(modifier) {
-        InputChip(
-            selected = true,
-            onClick = {},
-            label = { Text(text = "Chip") },
-            trailingIcon = { Icon(imageVector = Icons.Filled.Clear, contentDescription = null) }
-        )
+        LazyRow {
+            items(items = tags) {
+                InputChip(
+                    selected = false,
+                    onClick = {},
+                    colors = InputChipDefaults.inputChipColors(containerColor = it.color),
+                    label = { Text(text = it.name) },
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Clear,
+                            contentDescription = null
+                        )
+                    }
+                )
+            }
+            item {
+                IconButton(onClick = onAddTag) {
+                    Icon(Icons.Filled.Add, contentDescription = null)
+                }
+            }
+        }
+
     }
 }

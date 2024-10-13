@@ -20,7 +20,7 @@ class BookshelvesViewModel(
         val volume = Volume(title = "New book", author = "", year = 2000)
 
         viewModelScope.launch(Dispatchers.IO) {
-            bookService.updateBook(volume)
+            bookService.updateVolume(volume)
             bookService.addToBookshelf(volume, bookshelf)
         }
     }

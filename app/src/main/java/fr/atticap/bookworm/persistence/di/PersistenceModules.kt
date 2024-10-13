@@ -4,7 +4,9 @@ package fr.atticap.bookworm.persistence.di
 import androidx.room.Room
 import fr.atticap.bookworm.persistence.BookwormDatabase
 import fr.atticap.bookworm.persistence.dao.BookDao
+import fr.atticap.bookworm.persistence.dao.TagDao
 import fr.atticap.bookworm.persistence.repository.BookRepository
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 fun persistenceModule() = module {
@@ -12,13 +14,12 @@ fun persistenceModule() = module {
         Room.databaseBuilder(
             get(),
             BookwormDatabase::class.java,
-            "bookworm"
-        ).fallbackToDestructiveMigrationFrom().build()
+            "bookworm",
+        ).build()
     }
 
-    single<BookDao> {
-        get<BookwormDatabase>().bookshelfDao()
-    }
+    single<BookDao> { get<BookwormDatabase>().bookshelfDao() }
+    single<TagDao> { get<BookwormDatabase>().tagDao() }
 
-    single<BookRepository> { BookRepository(get()) }
+    singleOf(::BookRepository)
 }
