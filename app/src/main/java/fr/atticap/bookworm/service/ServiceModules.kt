@@ -5,4 +5,5 @@ import org.koin.dsl.module
 
 fun serviceModule() = module {
     singleOf(::BookService)
+    singleOf(::TagService)
 }

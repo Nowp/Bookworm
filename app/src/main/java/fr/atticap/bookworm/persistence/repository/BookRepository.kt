@@ -7,10 +7,8 @@ import fr.atticap.bookworm.persistence.dao.BookDao
 import fr.atticap.bookworm.persistence.dao.TagDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-@OptIn(ExperimentalUuidApi::class)
 class BookRepository(private val bookDao: BookDao, private val tagDao: TagDao) {
     val books: Flow<List<Volume>> = bookDao.getAllBooks()
     val bookshelves: Flow<Map<Bookshelf, List<Volume>>> = bookDao.getBookshelvesWithBooks()

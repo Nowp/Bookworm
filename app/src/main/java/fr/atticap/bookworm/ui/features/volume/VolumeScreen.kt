@@ -42,7 +42,7 @@ private const val MOCK_DESCRIPTION =
     "In the mystical kingdom of Eldoria, where magic thrives and ancient prophecies whisper, a young cartographer named Elara discovers a compass crafted from obsidian. This is no ordinary compass, for it points not north, but towards destiny. When a shadowy force threatens to engulf Eldoria in darkness, Elara must embark on a perilous journey, guided by the compass and her own burgeoning magical abilities. Along the way, she'll encounter mythical creatures, cunning sorcerers, and the secrets of a forgotten era. Will she unravel the mysteries of the obsidian compass and save her kingdom before it's too late?\n"
 
 @Composable
-fun VolumeScreen() {
+fun VolumeScreen(onAddTag: () -> Unit) {
     val detailsViewModel = koinViewModel<VolumeViewModel>()
 
     val volume: Option<Pair<Volume, List<PositionedTag>>> by detailsViewModel.volume.map { it.toOption() }
@@ -51,9 +51,7 @@ fun VolumeScreen() {
     volume.onSome { (volume, tags) ->
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             MainInfo(title = volume.title, author = volume.author, year = volume.year)
-            Tags(tags = tags.sortedBy(PositionedTag::pos).map(PositionedTag::tag), onAddTag = {
-                detailsViewModel.addTagToVolume()
-            })
+            Tags(tags = tags.sortedBy(PositionedTag::pos).map(PositionedTag::tag), onAddTag = onAddTag)
             Description(description = MOCK_DESCRIPTION)
         }
     }
@@ -90,28 +88,27 @@ private fun Description(modifier: Modifier = Modifier, description: String) {
 
 @Composable
 private fun Tags(modifier: Modifier = Modifier, tags: List<Tag>, onAddTag: () -> Unit) {
-    Row(modifier) {
-        LazyRow {
-            items(items = tags) {
-                InputChip(
-                    selected = false,
-                    onClick = {},
-                    colors = InputChipDefaults.inputChipColors(containerColor = it.color),
-                    label = { Text(text = it.name) },
-                    trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Clear,
-                            contentDescription = null
-                        )
-                    }
-                )
-            }
-            item {
-                IconButton(onClick = onAddTag) {
-                    Icon(Icons.Filled.Add, contentDescription = null)
+    LazyRow(modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        items(items = tags) {
+            InputChip(
+                selected = false,
+                onClick = {},
+                colors = InputChipDefaults.inputChipColors(
+                    containerColor = it.color
+                ),
+                label = { Text(text = it.name) },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.Clear,
+                        contentDescription = null
+                    )
                 }
+            )
+        }
+        item {
+            IconButton(onClick = onAddTag) {
+                Icon(Icons.Filled.Add, contentDescription = null)
             }
         }
-
     }
 }

@@ -17,13 +17,16 @@ interface TagDao {
     @Query("SELECT * FROM tag")
     fun getAllTags(): Flow<List<Tag>>
 
+    @Query("SELECT * FROM tag WHERE id = :id")
+    fun getTagById(id: Uuid): Flow<Tag>
+
     @Query("SELECT tag.*, volume_tag.pos FROM volume_tag INNER JOIN tag ON volume_tag.tagId = tag.id WHERE volumeId = :volumeId")
     fun getAllTagsOfVolume(volumeId: Uuid): Flow<List<@MapColumn("pos") PositionedTag>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun updateTag(tag: Tag)
+    suspend fun update(tag: Tag)
 
     @Transaction
     @Insert
-    fun insertVolumeTag(volumeTag: VolumeTag)
+    suspend fun insertVolumeTag(volumeTag: VolumeTag)
 }

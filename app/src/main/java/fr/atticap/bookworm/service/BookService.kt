@@ -15,23 +15,23 @@ class BookService(private val bookDao: BookDao, private val tagDao: TagDao) {
 
     fun addToBookshelf(volume: Volume, bookshelf: Bookshelf) {
         Log.d("BookService", "Adding book $volume to bookshelf $bookshelf")
-        bookDao.insertBookshelfContent(BookshelfContent(bookshelf.id, volume.id))
+        bookDao.insert(BookshelfContent(bookshelf.id, volume.id))
     }
 
-    fun addTagToVolume(volume: Volume, tag: Tag, pos: Int) {
+    suspend fun addTagToVolume(volume: Volume, tag: Tag, pos: Int) {
         Log.d("BookService", "Adding tag $tag to volume $volume")
 
-        tagDao.updateTag(tag)
+        tagDao.update(tag)
         tagDao.insertVolumeTag(VolumeTag(volume.id, tag.id, pos))
     }
 
-    fun updateBookshelf(bookshelf: Bookshelf) {
+    suspend fun updateBookshelf(bookshelf: Bookshelf) {
         Log.d("BookService", "Updating bookshelf $bookshelf")
-        bookDao.updateBookshelf(bookshelf)
+        bookDao.update(bookshelf)
     }
 
-    fun updateVolume(volume: Volume) {
+    suspend fun updateVolume(volume: Volume) {
         Log.d("BookService", "Updating volume $volume")
-        bookDao.updateBook(volume)
+        bookDao.update(volume)
     }
 }

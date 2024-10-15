@@ -13,11 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import fr.atticap.bookworm.ui.features.bookshelf.BookshelvesRoute
 import fr.atticap.bookworm.ui.features.bookshelf.BookshelvesScreen
 import fr.atticap.bookworm.ui.features.bookshelf.BookshelvesWallRoute
 import fr.atticap.bookworm.ui.features.bookshelf.BookshelvesWallScreen
+import fr.atticap.bookworm.ui.features.tag.CreateTagDialog
+import fr.atticap.bookworm.ui.features.tag.CreateTagRoute
 import fr.atticap.bookworm.ui.features.volume.VolumeRoute
 import fr.atticap.bookworm.ui.features.volume.VolumeScreen
 import fr.atticap.bookworm.ui.theme.BookwormTheme
@@ -61,7 +64,15 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable<VolumeRoute> {
-                                VolumeScreen()
+                                VolumeScreen(
+                                    onAddTag = {
+                                        navController.navigate(CreateTagRoute)
+                                    }
+                                )
+                            }
+
+                            dialog<CreateTagRoute> {
+                                CreateTagDialog()
                             }
                         }
                     }

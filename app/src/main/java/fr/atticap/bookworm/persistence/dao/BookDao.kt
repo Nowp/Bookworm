@@ -30,20 +30,17 @@ interface BookDao {
     fun getBookById(id: Uuid): Flow<Volume>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun updateBook(volume: Volume)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun updateBookshelf(bookshelf: Bookshelf)
+    fun update(bookshelf: Bookshelf)
 
     @Transaction
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateBookshelf(volume: Volume)
+    fun update(volume: Volume)
 
     @Transaction
-    @Insert
-    fun insertBookshelfContent(bookshelfContent: BookshelfContent)
+    @Update
+    fun insert(bookshelfContent: BookshelfContent)
 
     @Transaction
     @Delete
-    fun deleteBookshelfContent(bookshelfContent: BookshelfContent)
+    fun delete(bookshelfContent: BookshelfContent)
 }
