@@ -13,3 +13,4 @@ data class Volume @OptIn(ExperimentalUuidApi::class) constructor(
     val author: String,
     val year: Int,
 )
+

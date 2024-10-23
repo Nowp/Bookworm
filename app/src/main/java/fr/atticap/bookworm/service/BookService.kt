@@ -22,7 +22,7 @@ class BookService(private val bookDao: BookDao, private val tagDao: TagDao) {
         Log.d("BookService", "Adding tag $tag to volume $volume")
 
         tagDao.update(tag)
-        tagDao.insertVolumeTag(VolumeTag(volume.id, tag.id, pos))
+        tagDao.updateVolumeTag(VolumeTag(volume.id, tag.id, pos))
     }
 
     suspend fun updateBookshelf(bookshelf: Bookshelf) {

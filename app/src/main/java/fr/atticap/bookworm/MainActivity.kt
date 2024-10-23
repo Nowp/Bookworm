@@ -21,6 +21,7 @@ import fr.atticap.bookworm.ui.features.bookshelf.BookshelvesWallRoute
 import fr.atticap.bookworm.ui.features.bookshelf.BookshelvesWallScreen
 import fr.atticap.bookworm.ui.features.tag.CreateTagDialog
 import fr.atticap.bookworm.ui.features.tag.CreateTagRoute
+import fr.atticap.bookworm.ui.features.tag.EditTagRoute
 import fr.atticap.bookworm.ui.features.volume.VolumeRoute
 import fr.atticap.bookworm.ui.features.volume.VolumeScreen
 import fr.atticap.bookworm.ui.theme.BookwormTheme
@@ -72,7 +73,23 @@ class MainActivity : ComponentActivity() {
                             }
 
                             dialog<CreateTagRoute> {
-                                CreateTagDialog()
+                                CreateTagDialog(
+                                    title = "Create Tag",
+                                    "Create"
+                                ) {
+                                    navController.popBackStack()
+                                    navController.currentBackStackEntry?.savedStateHandle?.remove<String?>("createdTagId")
+                                    navController.currentBackStackEntry?.savedStateHandle?.set<String?>("createdTagId", it.toString())
+                                }
+                            }
+
+                            dialog<EditTagRoute> {
+                                CreateTagDialog(
+                                    title = "Edit Tag",
+                                    "Save"
+                                ) {
+                                    navController.popBackStack()
+                                }
                             }
                         }
                     }

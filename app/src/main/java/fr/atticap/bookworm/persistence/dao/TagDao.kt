@@ -6,6 +6,7 @@ import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import fr.atticap.bookworm.model.PositionedTag
 import fr.atticap.bookworm.model.Tag
 import fr.atticap.bookworm.model.VolumeTag
@@ -27,6 +28,6 @@ interface TagDao {
     suspend fun update(tag: Tag)
 
     @Transaction
-    @Insert
-    suspend fun insertVolumeTag(volumeTag: VolumeTag)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateVolumeTag(volumeTag: VolumeTag)
 }

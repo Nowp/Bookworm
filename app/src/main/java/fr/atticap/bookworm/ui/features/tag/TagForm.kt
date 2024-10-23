@@ -1,8 +1,12 @@
 package fr.atticap.bookworm.ui.features.tag
 
 import androidx.compose.ui.graphics.Color
-import arrow.core.Ior
-import arrow.core.raise.ior
+import androidx.compose.ui.graphics.isSpecified
+import arrow.core.Either
+import arrow.core.raise.either
+import arrow.core.raise.ensure
+import arrow.core.raise.zipOrAccumulate
+import arrow.optics.optics
 
 
 sealed interface TagFormValidation {
@@ -10,12 +14,19 @@ sealed interface TagFormValidation {
     data object ColorUnspecified : TagFormValidation
 }
 
+@optics
 data class TagForm private constructor(val name: String, val color: Color) {
     companion object {
+        val Empty: Either.Left<List<TagFormValidation>> =
+            Companion("", Color.Unspecified) as Either.Left<List<TagFormValidation>>
+
         operator fun invoke(
             name: String, color: Color
-        ): Ior<List<TagFormValidation>, TagForm> = ior(List<TagFormValidation>::plus) {
-            TagForm(name, color)
+        ): Either<List<TagFormValidation>, TagForm> = either {
+            zipOrAccumulate(
+                { ensure(name.isNotBlank()) { TagFormValidation.EmptyName } },
+                { ensure(color.isSpecified) { TagFormValidation.ColorUnspecified } },
+            ) { _, _ -> TagForm(name, color) }
         }
     }
 }
